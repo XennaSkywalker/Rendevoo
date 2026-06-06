@@ -6,6 +6,9 @@ const closeButton = document.getElementById("close-button");
 const submitButton = document.getElementById("submit-button");
 let latLng;
 
+console.log("google =", window.google);
+console.log("API key test");
+
 async function initMap() {
   const { Map } = await google.maps.importLibrary("maps");
   const { AdvancedMarkerElement, PinElement } =

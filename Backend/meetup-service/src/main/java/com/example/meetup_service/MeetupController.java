@@ -1,5 +1,6 @@
 package com.example.meetup_service;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class MeetupController {
     }
 
     @PostMapping("backend/meetup")
-    public MeetupResponseDTO createMeetup (@RequestBody MeetupRequestDTO meetupRequestDTO){
+    public ResponseEntity<MeetupResponseDTO> createMeetup (@RequestBody MeetupRequestDTO meetupRequestDTO){
         return meetupService.createMeetup(meetupRequestDTO);
     }
 

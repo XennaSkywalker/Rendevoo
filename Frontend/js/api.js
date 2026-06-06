@@ -15,6 +15,19 @@ export async function postMeetup(meetupData) {
     },
     body: JSON.stringify(meetupData),
   });
+  const data = await response.json();
+  console.log(data);
+  return data;
+}
+
+export async function login(credentials) {
+  const response = await fetch("http://localhost:8080/backend/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  });
 
   const data = await response.json();
   console.log("-----");

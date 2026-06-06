@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.util.Objects;
 
 
+import com.example.user_service.UserEntity;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,7 +13,13 @@ import jakarta.persistence.*;
 public class MeetupEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public long id;
+    private long id;
+
+
+
+    @Column(name = "creator_id")
+    private long creatorId;
+
     private double lat;
     private double lng;
     private String meetupName;
@@ -25,7 +32,8 @@ public class MeetupEntity {
     public MeetupEntity() {
     }
 
-    public MeetupEntity(double lat, double lng, String meetupName, LocalDate meetupDate, LocalTime meetupTime) {
+    public MeetupEntity(long creatorId, double lat, double lng, String meetupName, LocalDate meetupDate, LocalTime meetupTime) {
+        this.creatorId = creatorId;
         this.lat = lat;
         this.lng = lng;
         this.meetupName = meetupName;
@@ -46,8 +54,21 @@ public class MeetupEntity {
         return Objects.hash(lat, lng, meetupName, meetupDate, meetupTime);
     }
 
+    //Getters & Setters
+    public long getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(long creatorId) {
+        this.creatorId = creatorId;
+    }
+
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public double getLat() {

@@ -6,4 +6,10 @@ import java.util.List;
 
 public interface MeetupRepository extends JpaRepository<MeetupEntity, Long> {
     List<MeetupEntity> findByMeetupStatus(MeetupStatus meetupStatus);
+
+    List<MeetupEntity> findByCreatorId(long creatorId);
+    //things to do:
+    //deleting a user and,
+    //setting creatorId to null when a user is deleted
+
 }

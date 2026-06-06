@@ -32,7 +32,7 @@ public class MeetupRequestDTO {
         this.meetupTime = meetupTime;
     }
 
-    //Getters Setters
+    //Getters & Setters
     public double getLat() {
         return lat;
     }

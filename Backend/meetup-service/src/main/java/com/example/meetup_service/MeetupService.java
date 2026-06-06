@@ -1,5 +1,7 @@
 package com.example.meetup_service;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,15 +17,17 @@ public class MeetupService {
         this.meetupRepository = meetupRepository;
     }
 
-    public MeetupResponseDTO createMeetup(MeetupRequestDTO meetupRequestDTO) {
+    public ResponseEntity<MeetupResponseDTO> createMeetup(MeetupRequestDTO meetupRequestDTO) {
         MeetupEntity newEntity = toEntity(meetupRequestDTO);
         MeetupEntity saved = meetupRepository.save(newEntity);
-        return toResponseDTO(saved);
+
+        //use response entity for  return message
+        return ResponseEntity.status(HttpStatus.CREATED).body(toResponseDTO(saved));
     }
 
     public MeetupEntity toEntity(MeetupRequestDTO meetupRequestDTO) {
 
-        return new MeetupEntity(meetupRequestDTO.getLat(),
+        return new MeetupEntity(1234, meetupRequestDTO.getLat(),
                 meetupRequestDTO.getLng(),
                 meetupRequestDTO.getMeetupName(),
                 meetupRequestDTO.getMeetupDate(),
