@@ -3,7 +3,7 @@ package com.example.meetup_service;
 import com.example.user_service.SecurityConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.persistence.autoconfigure.EntityScan;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
@@ -21,6 +21,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 		"com.example.meetup_service",
 		"com.example.user_service"
 })
+
 @Import(SecurityConfig.class)
 public class MeetupServiceApplication {
 
