@@ -3,7 +3,7 @@ import { login } from "./api.js";
 document.getElementById("login-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const errorMessageDiv = document.getElementById("error-message");
-  errorMessageDiv.textContent = "";
+  if (errorMessageDiv) errorMessageDiv.textContent = "";
 
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
@@ -14,6 +14,6 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
     const data = await login(credentials);
   } catch (error) {
     console.error("Login failed:", error);
-    errorMessageDiv.textContent = error.message;
+    if (errorMessageDiv) errorMessageDiv.textContent = error.message;
   }
 });

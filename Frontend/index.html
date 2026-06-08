@@ -1,47 +1,259 @@
 <!doctype html>
-<html>
+<html class="light" lang="en">
   <head>
-    <title>Rendezvoo</title>
-
-    <link rel="stylesheet" type="text/css" href="./css/styles.css" />
-    <script type="module" src="./js/map.js"></script>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Rendevoo</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-lowest": "#ffffff",
+              "on-error": "#ffefef",
+              "tertiary-fixed": "#ff9288",
+              surface: "#f6f6f8",
+              "on-primary-fixed": "#00083f",
+              "on-tertiary-container": "#611211",
+              "surface-container": "#e7e8ea",
+              "on-surface-variant": "#5a5c5d",
+              "primary-fixed": "#96a5ff",
+              "on-tertiary-fixed-variant": "#6d1b19",
+              "surface-tint": "#4555a8",
+              "on-primary-container": "#0f2176",
+              "outline-variant": "#acadaf",
+              "error-dim": "#a70138",
+              "on-primary-fixed-variant": "#1b2c7f",
+              "primary-dim": "#39489b",
+              background: "#f6f6f8",
+              "surface-variant": "#dbdde0",
+              "on-tertiary": "#ffefed",
+              "surface-bright": "#f6f6f8",
+              "on-secondary-container": "#005a53",
+              "tertiary-container": "#ff9288",
+              "on-surface": "#2d2f31",
+              "surface-container-low": "#f0f1f3",
+              "error-container": "#f74b6d",
+              secondary: "#00675f",
+              "surface-container-highest": "#dbdde0",
+              "surface-container-high": "#e1e2e5",
+              "secondary-fixed": "#81f3e5",
+              "inverse-surface": "#0c0e10",
+              "surface-dim": "#d2d4d8",
+              "on-error-container": "#510017",
+              "on-tertiary-fixed": "#3a0002",
+              "on-secondary-fixed-variant": "#00655d",
+              "on-secondary": "#bffff5",
+              "inverse-on-surface": "#9c9d9f",
+              "secondary-dim": "#005a53",
+              "primary-fixed-dim": "#8998f0",
+              outline: "#757779",
+              primary: "#4555a8",
+              "on-background": "#2d2f31",
+              "primary-container": "#96a5ff",
+              "secondary-fixed-dim": "#72e4d7",
+              "secondary-container": "#81f3e5",
+              "tertiary-fixed-dim": "#f58278",
+              "on-secondary-fixed": "#004640",
+              "inverse-primary": "#96a5ff",
+              "on-primary": "#f2f1ff",
+              error: "#b41340",
+              tertiary: "#9b3d37",
+              "tertiary-dim": "#8b312c",
+            },
+            borderRadius: {
+              DEFAULT: "1rem",
+              lg: "2rem",
+              xl: "3rem",
+              full: "9999px",
+            },
+            fontFamily: {
+              headline: ["Plus Jakarta Sans"],
+              display: ["Plus Jakarta Sans"],
+              body: ["Be Vietnam Pro"],
+              label: ["Be Vietnam Pro"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .gradient-button {
+        background: linear-gradient(135deg, #4555a8 0%, #96a5ff 100%);
+      }
+      #map-container {
+        position: relative;
+        height: 100vh;
+      }
+      #map {
+        height: 100%;
+        width: 100%;
+        z-index: 1;
+      }
+      #meetup-form {
+        position: fixed;
+        top: 50px;
+        left: 0;
+        height: calc(100vh - 50px);
+        width: 30%;
+        background: white;
+        padding: 28px;
+        display: block;
+        z-index: 10;
+        box-shadow: 4px 0 12px rgba(0, 0, 0, 0.15);
+        border-radius: 0;
+        overflow-y: auto;
+      }
+      .hidden {
+        display: none;
+      }
+    </style>
   </head>
-  <body>
+  <body class="bg-surface font-body text-on-surface antialiased">
+    <!-- Navigation Bar -->
+    <nav
+      class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-surface-container"
+    >
+      <div
+        class="max-w-7xl mx-auto px-0 py-4 flex items-center justify-between"
+      >
+        <a
+          href="./"
+          class="text-2xl font-black text-primary italic font-headline"
+          >Rendevoo</a
+        >
+        <ul class="flex gap-8">
+          <!-- <li>
+            <a
+              href="./index.html"
+              class="text-on-surface font-semibold hover:text-primary transition-colors"
+              >Home</a
+            >
+          </li> -->
+          <li>
+            <a
+              href="./login.html"
+              class="text-on-surface font-semibold hover:text-primary transition-colors"
+              >Login</a
+            >
+          </li>
+          <li>
+            <a
+              href="./signup.html"
+              class="px-4 py-2 gradient-button text-on-primary font-bold rounded-full hover:shadow-lg transition-all"
+              >Signup</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- Map Container -->
     <div id="map-container">
       <div id="map"></div>
-      <div id="login-container"></div>
+      <!-- Meetup Form Modal -->
       <div id="meetup-form-container" class="hidden">
         <form id="meetup-form">
-          <button type="button" id="close-button" class="form-input">
-            Close
-          </button>
-          <button id="login-button">
-            Login
-            <a href="./login.html" id="login-link">Login</a>
-          </button>
-          <button id="signup-button">
-            Signup
-            <a href="./signup.html" id="signup-link">Signup</a>
-          </button>
-          <label class="form-input">
-            Meetup Name:
-            <input type="text" name="meetup-name" />
-          </label>
-          <label class="form-input">
-            Meetup Date:
-            <input type="date" name="meetup-date" />
-          </label>
-          <label class="form-input">
-            Meetup Time:
-            <input type="time" name="meetup-time" />
-          </label>
-          <button type="submit" id="submit-button">Submit</button>
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-2xl font-bold text-on-surface font-headline">
+              Create Meetup
+            </h3>
+            <button
+              type="button"
+              id="close-button"
+              class="text-on-surface-variant hover:text-on-surface transition-colors"
+            >
+              <span class="material-symbols-outlined text-[28px]">close</span>
+            </button>
+          </div>
+          <div class="space-y-5">
+            <div class="space-y-2">
+              <label class="text-sm font-semibold text-on-surface-variant"
+                >Meetup Name</label
+              >
+              <input
+                class="w-full px-4 py-3 bg-surface-container-low border-none rounded-DEFAULT focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all outline-none"
+                name="meetup-name"
+                placeholder="Enter meetup name"
+                type="text"
+              />
+            </div>
+            <div class="space-y-2">
+              <label class="text-sm font-semibold text-on-surface-variant"
+                >Meetup Date</label
+              >
+              <input
+                class="w-full px-4 py-3 bg-surface-container-low border-none rounded-DEFAULT focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all outline-none"
+                name="meetup-date"
+                type="date"
+              />
+            </div>
+            <div class="space-y-2">
+              <label class="text-sm font-semibold text-on-surface-variant"
+                >Meetup Time</label
+              >
+              <input
+                class="w-full px-4 py-3 bg-surface-container-low border-none rounded-DEFAULT focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all outline-none"
+                name="meetup-time"
+                type="time"
+              />
+            </div>
+          </div>
+          <div class="flex gap-4 mt-8">
+            <button
+              type="button"
+              id="close-button-secondary"
+              class="flex-1 px-4 py-3 bg-surface-container text-on-surface font-semibold rounded-full hover:bg-surface-container-high transition-all"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              id="submit-button"
+              class="flex-1 gradient-button text-on-primary font-bold rounded-full hover:shadow-lg transition-all"
+            >
+              Create Meetup
+            </button>
+          </div>
         </form>
       </div>
     </div>
+    <script type="module" src="./js/map.js"></script>
 
+    <!-- Google Maps API -->
     <!-- prettier-ignore -->
     <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
         ({key: "AIzaSyD5bKvkaP5lWWzEyDipb3A1if7A6pHSDIw", v: "weekly"});</script>
+    <script>
+      // Wire up secondary close button
+      const closeButtonSecondary = document.getElementById(
+        "close-button-secondary",
+      );
+      if (closeButtonSecondary) {
+        closeButtonSecondary.addEventListener("click", () => {
+          document
+            .getElementById("meetup-form-container")
+            .classList.add("hidden");
+        });
+      }
+    </script>
   </body>
 </html>

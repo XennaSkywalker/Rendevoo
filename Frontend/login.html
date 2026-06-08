@@ -1,29 +1,332 @@
 <!doctype html>
-<html lang="en">
+
+<html class="light" lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - Rendezvoo</title>
-    <!-- <link     rel="stylesheet" href="./css/login.css" /> -->
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Login | Rendevoo</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Icons -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-lowest": "#ffffff",
+              "on-error": "#ffefef",
+              "tertiary-fixed": "#ff9288",
+              surface: "#f6f6f8",
+              "on-primary-fixed": "#00083f",
+              "on-tertiary-container": "#611211",
+              "surface-container": "#e7e8ea",
+              "on-surface-variant": "#5a5c5d",
+              "primary-fixed": "#96a5ff",
+              "on-tertiary-fixed-variant": "#6d1b19",
+              "surface-tint": "#4555a8",
+              "on-primary-container": "#0f2176",
+              "outline-variant": "#acadaf",
+              "error-dim": "#a70138",
+              "on-primary-fixed-variant": "#1b2c7f",
+              "primary-dim": "#39489b",
+              background: "#f6f6f8",
+              "surface-variant": "#dbdde0",
+              "on-tertiary": "#ffefed",
+              "surface-bright": "#f6f6f8",
+              "on-secondary-container": "#005a53",
+              "tertiary-container": "#ff9288",
+              "on-surface": "#2d2f31",
+              "surface-container-low": "#f0f1f3",
+              "error-container": "#f74b6d",
+              secondary: "#00675f",
+              "surface-container-highest": "#dbdde0",
+              "surface-container-high": "#e1e2e5",
+              "secondary-fixed": "#81f3e5",
+              "inverse-surface": "#0c0e10",
+              "surface-dim": "#d2d4d8",
+              "on-error-container": "#510017",
+              "on-tertiary-fixed": "#3a0002",
+              "on-secondary-fixed-variant": "#00655d",
+              "on-secondary": "#bffff5",
+              "inverse-on-surface": "#9c9d9f",
+              "secondary-dim": "#005a53",
+              "primary-fixed-dim": "#8998f0",
+              outline: "#757779",
+              primary: "#4555a8",
+              "on-background": "#2d2f31",
+              "primary-container": "#96a5ff",
+              "secondary-fixed-dim": "#72e4d7",
+              "secondary-container": "#81f3e5",
+              "tertiary-fixed-dim": "#f58278",
+              "on-secondary-fixed": "#004640",
+              "inverse-primary": "#96a5ff",
+              "on-primary": "#f2f1ff",
+              error: "#b41340",
+              tertiary: "#9b3d37",
+              "tertiary-dim": "#8b312c",
+            },
+            borderRadius: {
+              DEFAULT: "1rem",
+              lg: "2rem",
+              xl: "3rem",
+              full: "9999px",
+            },
+            fontFamily: {
+              headline: ["Plus Jakarta Sans"],
+              display: ["Plus Jakarta Sans"],
+              body: ["Be Vietnam Pro"],
+              label: ["Be Vietnam Pro"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .gradient-button {
+        background: linear-gradient(135deg, #4555a8 0%, #96a5ff 100%);
+      }
+      .glass-panel {
+        backdrop-filter: blur(24px);
+        background: rgba(255, 255, 255, 0.8);
+      }
+      .bubbly-bg {
+        background: radial-gradient(
+          circle at top left,
+          #f2f1ff 0%,
+          #f6f6f8 100%
+        );
+      }
+    </style>
   </head>
-  <body>
-    <div class="login-container">
-      <h2>Login to Rendezvoo</h2>
-      <form id="login-form">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required />
+  <body
+    class="bg-surface font-body text-on-surface antialiased overflow-hidden"
+  >
+    <main class="flex min-h-screen">
+      <!-- Split-Screen: Visual Illustration Side -->
+      <section
+        class="hidden lg:flex lg:w-1/2 relative p-12 overflow-hidden items-center justify-center bg-primary"
+      >
+        <!-- Background Image with prompt as per instructions -->
+        <div class="absolute inset-0 z-0">
+          <img
+            class="w-full h-full object-cover opacity-60 scale-105"
+            data-alt="A diverse group of cheerful friends gathering around a large outdoor wooden table at sunset, sharing food and laughter. The lighting is golden and warm, casting long shadows and creating a cozy, high-end lifestyle atmosphere. The color palette features rich indigos, soft corals, and deep greens, consistent with a premium social application's aesthetic. The overall mood is vibrant, welcoming, and deeply connected."
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDurVLwDuc0nW7BUx7j_TJ7PWR2JyUxi9Hluu3OCaw4z3lo9fFOutZ-zyFwFo6wNN_avEatqt1P0mG06CXwcUYoZ0Ya1VlxUEFnm6S9p7cWHzlZVw1Kw2vNKLw1ua-6Vg8-F18pUFoKKg7TqElfmCHZSQEP9TSSkbKcFJL4XCd5dswyPpaY2oUFuuiX8nQbUvGJ2voXeOmePI2gTfeYc2JGauCHdiv3WWjBv-ihZjn13yOZ7xUjgVdBAAuE3arm3w_mw6g3RXNEPAdf"
+          />
+        </div>
+        <!-- Branding Overlay -->
+        <div class="relative z-10 w-full max-w-lg">
+          <div class="glass-panel p-10 rounded-xl shadow-2xl">
+            <h1
+              class="font-headline font-black text-5xl text-primary mb-6 italic tracking-tight"
+            >
+              Rendevoo
+            </h1>
+            <p
+              class="font-headline text-3xl font-bold text-on-surface mb-4 leading-tight"
+            >
+              The Curated Connection.
+            </p>
+            <p class="text-on-surface-variant text-lg leading-relaxed">
+              Join a community of intentional explorers. Whether it's a quiet
+              morning coffee or a sunset trail walk, find your tribe here.
+            </p>
+            <div class="mt-10 flex gap-4">
+              <div class="flex -space-x-3">
+                <img
+                  class="h-10 w-10 rounded-full border-2 border-white"
+                  data-alt="Close up portrait of a smiling woman with glasses in a professional yet friendly setting, soft lighting, warm tones."
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUwyEYCija8NzAK864d5So4aphYwzDOFjIjGlyINJFq106ALkwsmTBK-CowW3p0_-sLjC-YFMpsIaS0QaZeceDnr64cuerm_o3J8UmIiJGjjKoGUeF3PBYL0fgy_2hfzxVJyeVpreYf4D7iPOIPWwUYsXLR3lnxxH7L_Pv9E9geJqcxkw7eOaLMB8hPXZwGbAd-qyKNCpmwwjRKDPUblEr-mouvXOaBx2VHWFAzyn27M-r0jhID2xNjzvKh_Y7NoVb2daq6pm-SeS2"
+                />
+                <img
+                  class="h-10 w-10 rounded-full border-2 border-white"
+                  data-alt="Portrait of a young man laughing, natural outdoor daylight, vibrant colors."
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBV1p584L0-B0kKucJSBUQAbwkJwFCFdEJrKp5iORpN1nq015ObH4t97RqLosYWDJE2aXEHPdhGOGMXWamL_mvo8gzxoZz24CzAobYx0o3DmbIZu7BKg1HdybvemHC-wztbyYtWDS9H6lZTv6AgMWjbdbClNLEHwcHWDh9Wy-fbrBMean1wRdnBH25O9Ps6qs7BqJNmHW3QKzSRB8122XNfw_lvRFxu1LnGlCM0niF_LLc4_iz4_0ItL4sAxLi7bD5ZtMvYGJDAVP1"
+                />
+                <img
+                  class="h-10 w-10 rounded-full border-2 border-white"
+                  data-alt="Profile photo of a stylish person with colored hair, soft focus background, editorial aesthetic."
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJjgCk23xTmLEiT7pOv86AhRM_ttHAOtDN0nMHuDzhifIHnlvIeZy3miBvd_i4egAeAXT6pWLHq0bECW5SaCc1CWVVQnqHpKDNYrbBhpD0mVjZFzmyogQVJNtlhKcYD7eozSxweEaFaDLYQl32Yw3idC0mvBODAt75PqEJGFaET511B9g3pk87Iql83eQpCC2ifoSr3K48LC0AJvieyU2MIx0tUj0nZcIv137737Plm7PqhbdPMPeKoxOcIwBy-CsrJ7memCIXFFwD"
+                />
+              </div>
+              <p class="text-sm font-semibold self-center text-primary-dim">
+                +2.4k members active now
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- Floating Decorative Elements -->
+        <div
+          class="absolute top-20 right-20 w-32 h-32 rounded-full bg-tertiary-container/30 blur-3xl animate-pulse"
+        ></div>
+        <div
+          class="absolute bottom-40 left-10 w-48 h-48 rounded-full bg-secondary-container/20 blur-3xl"
+        ></div>
+      </section>
+      <!-- Split-Screen: Form Side -->
+      <section
+        class="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 md:p-24 bubbly-bg"
+      >
+        <div class="w-full max-w-md">
+          <!-- Mobile Branding (Hidden on Large Screens) -->
+          <div class="lg:hidden mb-12 text-center">
+            <h1
+              class="font-headline font-black text-4xl text-primary italic tracking-tight"
+            >
+              Rendevoo
+            </h1>
+          </div>
+          <div class="space-y-2 mb-10">
+            <h2
+              class="text-display font-headline text-4xl font-extrabold text-on-surface tracking-tight"
+            >
+              Welcome back
+            </h2>
+            <p class="text-on-surface-variant">
+              Step back into your social pulse.
+            </p>
+          </div>
+          <!-- Login Form -->
+          <form id="login-form" class="space-y-6">
+            <div class="space-y-1.5">
+              <label
+                class="text-xs font-label uppercase tracking-widest text-on-surface-variant ml-4"
+                for="username"
+                >Username</label
+              >
+              <div class="relative">
+                <span
+                  class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-xl"
+                  >mail</span
+                >
+                <input
+                  class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-DEFAULT focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-300 placeholder:text-outline/50"
+                  id="username"
+                  placeholder="your_username"
+                  type="text"
+                />
+              </div>
+            </div>
+            <div class="space-y-1.5">
+              <div class="flex justify-between items-center ml-4 mr-1">
+                <label
+                  class="text-xs font-label uppercase tracking-widest text-on-surface-variant"
+                  for="password"
+                  >Password</label
+                >
+                <a
+                  class="text-xs font-label uppercase tracking-widest text-primary hover:text-primary-dim transition-colors"
+                  href="#"
+                  >Forgot?</a
+                >
+              </div>
+              <div class="relative">
+                <span
+                  class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-xl"
+                  >lock</span
+                >
+                <input
+                  class="w-full pl-12 pr-12 py-4 bg-surface-container-low border-none rounded-DEFAULT focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-300 placeholder:text-outline/50"
+                  id="password"
+                  placeholder="••••••••"
+                  type="password"
+                />
+                <button
+                  class="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface transition-colors"
+                  type="button"
+                >
+                  <span class="material-symbols-outlined text-xl"
+                    >visibility</span
+                  >
+                </button>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 ml-1">
+              <input
+                class="w-5 h-5 rounded-md border-outline-variant/30 text-primary focus:ring-primary"
+                id="remember"
+                type="checkbox"
+              />
+              <label class="text-sm text-on-surface-variant" for="remember"
+                >Keep me signed in for 30 days</label
+              >
+            </div>
+            <button
+              class="w-full py-4 gradient-button text-on-primary font-headline font-bold rounded-full shadow-lg hover:shadow-primary/20 hover:scale-[1.01] active:scale-95 transition-all duration-300"
+              type="submit"
+            >
+              Sign In
+            </button>
+          </form>
+          <div
+            id="error-message"
+            style="color: red; margin-top: 10px; font-weight: bold"
+          ></div>
+          <p class="mt-10 text-center text-on-surface-variant text-sm">
+            Don't have an account?
+            <a
+              class="text-primary font-bold hover:underline underline-offset-4 decoration-2"
+              href="./signup.html"
+              >Create an account</a
+            >
+          </p>
+        </div>
+      </section>
+    </main>
+    <script>
+      // Micro-interaction for the sign-in button
+      const loginBtn = document.querySelector('button[type="submit"]');
+      if (loginBtn) {
+        loginBtn.addEventListener("mousedown", () => {
+          loginBtn.classList.add("scale-95");
+        });
+        loginBtn.addEventListener("mouseup", () => {
+          loginBtn.classList.remove("scale-95");
+        });
+      }
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required />
+      // Toggle Password Visibility (Simple UI logic)
+      const visibilityBtn = document.querySelector('button[type="button"]');
+      const passwordInput = document.getElementById("password");
+      if (visibilityBtn && passwordInput) {
+        visibilityBtn.addEventListener("click", () => {
+          const isPassword = passwordInput.getAttribute("type") === "password";
+          passwordInput.setAttribute("type", isPassword ? "text" : "password");
+          visibilityBtn.querySelector("span").textContent = isPassword
+            ? "visibility_off"
+            : "visibility";
+        });
+      }
 
-        <button type="submit">Login</button>
-      </form>
-      <div
-        id="error-message"
-        style="color: red; margin-top: 10px; font-weight: bold"
-      ></div>
-    </div>
-
+      // Adding a gentle mouse-move parallax effect to the illustration (optional atmospheric effect)
+      const illustrationSide = document.querySelector(".lg\\:flex img");
+      if (illustrationSide) {
+        document.addEventListener("mousemove", (e) => {
+          const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
+          const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+          illustrationSide.style.transform = `scale(1.05) translate(${moveX}px, ${moveY}px)`;
+        });
+      }
+    </script>
     <script type="module" src="./js/login.js"></script>
   </body>
 </html>
