@@ -14,12 +14,12 @@ public class MeetupController {
         this.meetupService = meetupService;
     }
 
-    @PostMapping("backend/meetup")
+    @PostMapping("/backend/meetup")
     public ResponseEntity<MeetupResponseDTO> createMeetup (@RequestBody MeetupRequestDTO meetupRequestDTO){
         return meetupService.createMeetup(meetupRequestDTO);
     }
 
-    @GetMapping("backend/meetup")
+    @GetMapping("/backend/meetup")
     public List<MeetupResponseDTO> getMeetups () {
         return meetupService.getActiveMeetups();
     }

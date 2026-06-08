@@ -28,6 +28,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/signup").permitAll()
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/auth/verify").permitAll()
+                        .requestMatchers("/backend/meetup").permitAll()
                         .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated()               // Protects all other endpoints
                 );

@@ -5,6 +5,7 @@ import com.example.exceptions.InvalidCredentialsException;
 import com.example.exceptions.InvalidPasswordException;
 import com.example.exceptions.UsernameExistsException;
 import com.example.util.JwtUtil;
+import com.example.util.TokenDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.InvalidMediaTypeException;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +39,7 @@ public class UserService implements UserDetailsService {
         return userRepository.existsByEmail(email);
     }
 
-    public ResponseEntity<String> authenticateUser(LoginDTO loginDTO) {
+    public ResponseEntity<TokenDTO> authenticateUser(LoginDTO loginDTO) {
         //make sure user exists
         UserEntity user = loadUserByUsername(loginDTO.getUsername());
 
@@ -46,7 +47,7 @@ public class UserService implements UserDetailsService {
         checkPassword(loginDTO, user);
 
         //return JWT token
-        return ResponseEntity.status(HttpStatus.OK).body(jwtUtil.createToken(user.getId()));
+        return ResponseEntity.status(HttpStatus.OK).body(new TokenDTO(jwtUtil.createToken(user.getId())));
     }
 
     private void checkPassword(LoginDTO loginDTO, UserEntity user) {

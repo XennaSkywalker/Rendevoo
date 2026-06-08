@@ -25,6 +25,9 @@ public class JwtUtil {
         System.out.println("Base64 Key: " + base64Key);
 
         return Jwts.builder()
+                .header()
+                    .type("JWT")
+                    .and()
                 .subject(id.toString())
                 .issuedAt(new Date())
                 .expiration(Date.from(LocalDate.now().plusDays(7).atTime(LocalTime.now()).toInstant(ZoneOffset.UTC)))
