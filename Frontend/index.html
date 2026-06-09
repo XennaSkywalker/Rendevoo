@@ -1,9 +1,10 @@
 <!doctype html>
-<html class="light" lang="en">
+<html class="dark" lang="en">
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Rendevoo</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.png" />
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
     <link
@@ -20,7 +21,6 @@
         darkMode: "class",
         theme: {
           extend: {
-            colors: {
               "surface-container-lowest": "#ffffff",
               "on-error": "#ffefef",
               "tertiary-fixed": "#ff9288",
@@ -90,6 +90,15 @@
       };
     </script>
     <style>
+      body {
+        font-family: "Be Vietnam Pro", sans-serif;
+      }
+      h1,
+      h2,
+      h3,
+      .font-headline {
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
       .material-symbols-outlined {
         font-variation-settings:
           "FILL" 0,
@@ -100,9 +109,13 @@
       .gradient-button {
         background: linear-gradient(135deg, #4555a8 0%, #96a5ff 100%);
       }
+      .dark .gradient-button {
+        background: linear-gradient(135deg, #5568c8 0%, #7b88d9 100%);
+      }
       #map-container {
         position: relative;
         height: 100vh;
+        background: linear-gradient(180deg, #0f0f1e 0%, #090b16 100%);
       }
       #map {
         height: 100%;
@@ -111,15 +124,16 @@
       }
       #meetup-form {
         position: fixed;
-        top: 50px;
+        top: 65px;
         left: 0;
-        height: calc(100vh - 50px);
+        height: calc(100vh - 65px);
         width: 30%;
-        background: white;
+        background: rgba(15, 15, 30, 0.88);
+        backdrop-filter: blur(24px);
         padding: 28px;
         display: block;
         z-index: 10;
-        box-shadow: 4px 0 12px rgba(0, 0, 0, 0.15);
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.35);
         border-radius: 0;
         overflow-y: auto;
       }
@@ -128,20 +142,22 @@
       }
     </style>
   </head>
-  <body class="bg-surface font-body text-on-surface antialiased">
+  <body
+    class="bg-surface dark:bg-[#1a1a2e] font-body text-on-surface dark:text-[#e8e8f0] antialiased transition-colors duration-300"
+  >
     <!-- Navigation Bar -->
     <nav
-      class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-surface-container"
+      class="fixed top-0 left-0 right-0 z-50 bg-[#0f0f1e]/90 dark:bg-[#0f0f1e]/90 backdrop-blur-md shadow-sm border-b border-surface-container dark:border-[#2a2a3e] transition-colors duration-300"
     >
       <div
         class="max-w-7xl mx-auto px-0 py-4 flex items-center justify-between"
       >
         <a
           href="./"
-          class="text-2xl font-black text-primary italic font-headline"
+          class="text-2xl font-black text-primary dark:text-[#7b88d9] italic font-headline transition-colors duration-300"
           >Rendevoo</a
         >
-        <ul class="flex gap-8">
+        <ul class="flex gap-4 items-center">
           <!-- <li>
             <a
               href="./index.html"
@@ -152,7 +168,7 @@
           <li>
             <a
               href="./login.html"
-              class="text-on-surface font-semibold hover:text-primary transition-colors"
+              class="text-on-surface dark:text-[#e8e8f0] font-semibold hover:text-primary dark:hover:text-[#7b88d9] transition-colors duration-300"
               >Login</a
             >
           </li>
@@ -173,45 +189,50 @@
       <div id="meetup-form-container" class="hidden">
         <form id="meetup-form">
           <div class="flex items-center justify-between mb-6">
-            <h3 class="text-2xl font-bold text-on-surface font-headline">
+            <h3
+              class="text-2xl font-bold text-on-surface dark:text-[#e8e8f0] font-headline transition-colors duration-300"
+            >
               Create Meetup
             </h3>
             <button
               type="button"
               id="close-button"
-              class="text-on-surface-variant hover:text-on-surface transition-colors"
+              class="text-on-surface-variant dark:text-[#b0b0c0] hover:text-on-surface dark:hover:text-[#e8e8f0] transition-colors duration-300"
             >
               <span class="material-symbols-outlined text-[28px]">close</span>
             </button>
           </div>
           <div class="space-y-5">
             <div class="space-y-2">
-              <label class="text-sm font-semibold text-on-surface-variant"
+              <label
+                class="text-sm font-semibold text-on-surface-variant dark:text-[#b0b0c0] transition-colors duration-300"
                 >Meetup Name</label
               >
               <input
-                class="w-full px-4 py-3 bg-surface-container-low border-none rounded-DEFAULT focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all outline-none"
+                class="w-full px-4 py-3 bg-surface-container-low dark:bg-[#2a2a3e] border-none rounded-DEFAULT focus:ring-2 focus:ring-primary/20 dark:focus:ring-[#7b88d9]/20 focus:bg-surface-container-lowest dark:focus:bg-[#3a3a50] transition-all outline-none text-on-surface dark:text-[#e8e8f0] dark:placeholder-[#767680]"
                 name="meetup-name"
                 placeholder="Enter meetup name"
                 type="text"
               />
             </div>
             <div class="space-y-2">
-              <label class="text-sm font-semibold text-on-surface-variant"
+              <label
+                class="text-sm font-semibold text-on-surface-variant dark:text-[#b0b0c0] transition-colors duration-300"
                 >Meetup Date</label
               >
               <input
-                class="w-full px-4 py-3 bg-surface-container-low border-none rounded-DEFAULT focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all outline-none"
+                class="w-full px-4 py-3 bg-surface-container-low dark:bg-[#2a2a3e] border-none rounded-DEFAULT focus:ring-2 focus:ring-primary/20 dark:focus:ring-[#7b88d9]/20 focus:bg-surface-container-lowest dark:focus:bg-[#3a3a50] transition-all outline-none text-on-surface dark:text-[#e8e8f0] dark:placeholder-[#767680]"
                 name="meetup-date"
                 type="date"
               />
             </div>
             <div class="space-y-2">
-              <label class="text-sm font-semibold text-on-surface-variant"
+              <label
+                class="text-sm font-semibold text-on-surface-variant dark:text-[#b0b0c0] transition-colors duration-300"
                 >Meetup Time</label
               >
               <input
-                class="w-full px-4 py-3 bg-surface-container-low border-none rounded-DEFAULT focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all outline-none"
+                class="w-full px-4 py-3 bg-surface-container-low dark:bg-[#2a2a3e] border-none rounded-DEFAULT focus:ring-2 focus:ring-primary/20 dark:focus:ring-[#7b88d9]/20 focus:bg-surface-container-lowest dark:focus:bg-[#3a3a50] transition-all outline-none text-on-surface dark:text-[#e8e8f0] dark:placeholder-[#767680]"
                 name="meetup-time"
                 type="time"
               />
@@ -221,7 +242,7 @@
             <button
               type="button"
               id="close-button-secondary"
-              class="flex-1 px-4 py-3 bg-surface-container text-on-surface font-semibold rounded-full hover:bg-surface-container-high transition-all"
+              class="flex-1 px-4 py-3 bg-surface-container dark:bg-[#2a2a3e] text-on-surface dark:text-[#e8e8f0] font-semibold rounded-full hover:bg-surface-container-high dark:hover:bg-[#3a3a50] transition-all duration-300"
             >
               Cancel
             </button>
@@ -236,12 +257,12 @@
         </form>
       </div>
     </div>
-    <script type="module" src="./js/map.js"></script>
 
     <!-- Google Maps API -->
     <!-- prettier-ignore -->
     <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
         ({key: "AIzaSyD5bKvkaP5lWWzEyDipb3A1if7A6pHSDIw", v: "weekly"});</script>
+    <script type="module" src="./js/map.js"></script>
     <script>
       // Wire up secondary close button
       const closeButtonSecondary = document.getElementById(

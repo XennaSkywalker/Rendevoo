@@ -1,6 +1,6 @@
 <!doctype html>
 
-<html class="light" lang="en">
+<html class="dark" lang="en">
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -24,7 +24,6 @@
         darkMode: "class",
         theme: {
           extend: {
-            colors: {
               "surface-container-lowest": "#ffffff",
               "on-error": "#ffefef",
               "tertiary-fixed": "#ff9288",
@@ -94,6 +93,15 @@
       };
     </script>
     <style>
+      body {
+        font-family: "Be Vietnam Pro", sans-serif;
+      }
+      h1,
+      h2,
+      h3,
+      .font-headline {
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
       .material-symbols-outlined {
         font-variation-settings:
           "FILL" 0,
@@ -104,9 +112,16 @@
       .gradient-button {
         background: linear-gradient(135deg, #4555a8 0%, #96a5ff 100%);
       }
+      .dark .gradient-button {
+        background: linear-gradient(135deg, #5568c8 0%, #7b88d9 100%);
+      }
       .glass-panel {
         backdrop-filter: blur(24px);
         background: rgba(255, 255, 255, 0.8);
+      }
+      .dark .glass-panel {
+        backdrop-filter: blur(24px);
+        background: rgba(26, 26, 46, 0.9);
       }
       .bubbly-bg {
         background: radial-gradient(
@@ -115,93 +130,70 @@
           #f6f6f8 100%
         );
       }
+      .dark .bubbly-bg {
+        background: radial-gradient(
+          circle at top left,
+          #2a2a3e 0%,
+          #1a1a2e 100%
+        );
+      }
     </style>
   </head>
   <body
-    class="bg-surface font-body text-on-surface antialiased overflow-hidden"
+    class="bg-surface dark:bg-[#1a1a2e] font-body text-on-surface dark:text-[#e8e8f0] antialiased overflow-hidden transition-colors duration-300"
   >
     <main class="flex min-h-screen">
       <!-- Split-Screen: Visual Illustration Side -->
       <section
-        class="hidden lg:flex lg:w-1/2 relative p-12 overflow-hidden items-center justify-center bg-primary"
+        class="w-full md:w-1/2 lg:w-[55%] relative flex flex-col justify-between p-8 md:p-16 hero-gradient dark:bg-gradient-to-br dark:from-[#5568c8] dark:to-[#7b88d9] overflow-hidden min-h-[409px] md:min-h-screen transition-all duration-300"
       >
-        <!-- Background Image with prompt as per instructions -->
-        <div class="absolute inset-0 z-0">
-          <img
-            class="w-full h-full object-cover opacity-60 scale-105"
-            data-alt="A diverse group of cheerful friends gathering around a large outdoor wooden table at sunset, sharing food and laughter. The lighting is golden and warm, casting long shadows and creating a cozy, high-end lifestyle atmosphere. The color palette features rich indigos, soft corals, and deep greens, consistent with a premium social application's aesthetic. The overall mood is vibrant, welcoming, and deeply connected."
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDurVLwDuc0nW7BUx7j_TJ7PWR2JyUxi9Hluu3OCaw4z3lo9fFOutZ-zyFwFo6wNN_avEatqt1P0mG06CXwcUYoZ0Ya1VlxUEFnm6S9p7cWHzlZVw1Kw2vNKLw1ua-6Vg8-F18pUFoKKg7TqElfmCHZSQEP9TSSkbKcFJL4XCd5dswyPpaY2oUFuuiX8nQbUvGJ2voXeOmePI2gTfeYc2JGauCHdiv3WWjBv-ihZjn13yOZ7xUjgVdBAAuE3arm3w_mw6g3RXNEPAdf"
-          />
-        </div>
-        <!-- Branding Overlay -->
-        <div class="relative z-10 w-full max-w-lg">
-          <div class="glass-panel p-10 rounded-xl shadow-2xl">
-            <h1
-              class="font-headline font-black text-5xl text-primary mb-6 italic tracking-tight"
-            >
-              Rendevoo
-            </h1>
-            <p
-              class="font-headline text-3xl font-bold text-on-surface mb-4 leading-tight"
-            >
-              The Curated Connection.
-            </p>
-            <p class="text-on-surface-variant text-lg leading-relaxed">
-              Join a community of intentional explorers. Whether it's a quiet
-              morning coffee or a sunset trail walk, find your tribe here.
-            </p>
-            <div class="mt-10 flex gap-4">
-              <div class="flex -space-x-3">
-                <img
-                  class="h-10 w-10 rounded-full border-2 border-white"
-                  data-alt="Close up portrait of a smiling woman with glasses in a professional yet friendly setting, soft lighting, warm tones."
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUwyEYCija8NzAK864d5So4aphYwzDOFjIjGlyINJFq106ALkwsmTBK-CowW3p0_-sLjC-YFMpsIaS0QaZeceDnr64cuerm_o3J8UmIiJGjjKoGUeF3PBYL0fgy_2hfzxVJyeVpreYf4D7iPOIPWwUYsXLR3lnxxH7L_Pv9E9geJqcxkw7eOaLMB8hPXZwGbAd-qyKNCpmwwjRKDPUblEr-mouvXOaBx2VHWFAzyn27M-r0jhID2xNjzvKh_Y7NoVb2daq6pm-SeS2"
-                />
-                <img
-                  class="h-10 w-10 rounded-full border-2 border-white"
-                  data-alt="Portrait of a young man laughing, natural outdoor daylight, vibrant colors."
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBV1p584L0-B0kKucJSBUQAbwkJwFCFdEJrKp5iORpN1nq015ObH4t97RqLosYWDJE2aXEHPdhGOGMXWamL_mvo8gzxoZz24CzAobYx0o3DmbIZu7BKg1HdybvemHC-wztbyYtWDS9H6lZTv6AgMWjbdbClNLEHwcHWDh9Wy-fbrBMean1wRdnBH25O9Ps6qs7BqJNmHW3QKzSRB8122XNfw_lvRFxu1LnGlCM0niF_LLc4_iz4_0ItL4sAxLi7bD5ZtMvYGJDAVP1"
-                />
-                <img
-                  class="h-10 w-10 rounded-full border-2 border-white"
-                  data-alt="Profile photo of a stylish person with colored hair, soft focus background, editorial aesthetic."
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJjgCk23xTmLEiT7pOv86AhRM_ttHAOtDN0nMHuDzhifIHnlvIeZy3miBvd_i4egAeAXT6pWLHq0bECW5SaCc1CWVVQnqHpKDNYrbBhpD0mVjZFzmyogQVJNtlhKcYD7eozSxweEaFaDLYQl32Yw3idC0mvBODAt75PqEJGFaET511B9g3pk87Iql83eQpCC2ifoSr3K48LC0AJvieyU2MIx0tUj0nZcIv137737Plm7PqhbdPMPeKoxOcIwBy-CsrJ7memCIXFFwD"
-                />
-              </div>
-              <p class="text-sm font-semibold self-center text-primary-dim">
-                +2.4k members active now
-              </p>
-            </div>
-          </div>
-        </div>
-        <!-- Floating Decorative Elements -->
         <div
-          class="absolute top-20 right-20 w-32 h-32 rounded-full bg-tertiary-container/30 blur-3xl animate-pulse"
+          class="absolute top-[-10%] right-[-10%] w-96 h-96 bg-white/10 rounded-full blur-3xl animate-pulse"
         ></div>
-        <div
-          class="absolute bottom-40 left-10 w-48 h-48 rounded-full bg-secondary-container/20 blur-3xl"
-        ></div>
+        <div class="relative z-10">
+          <span
+            class="text-2xl font-black text-on-primary italic tracking-tight font-headline"
+            >Rendevoo</span
+          >
+        </div>
+        <div class="relative z-10 mt-auto">
+          <h1
+            class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-on-primary tracking-tight leading-[1.1] mb-6"
+          >
+            Where Every <br /><span class="text-secondary-fixed">Spark</span>
+            Finds a Home.
+          </h1>
+          <p
+            class="text-lg md:text-xl text-on-primary/80 max-w-lg font-body leading-relaxed"
+          >
+            Join a curated community where your hobbies aren't just
+            interests—they're invitations. Discover local gatherings designed
+            for genuine human connection.
+          </p>
+        </div>
       </section>
       <!-- Split-Screen: Form Side -->
       <section
-        class="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 md:p-24 bubbly-bg"
+        class="w-full md:w-1/2 lg:w-[45%] bg-surface-bright dark:bg-[#0f0f1e] flex items-center justify-center p-6 md:p-12 lg:p-20 transition-colors duration-300"
       >
         <div class="w-full max-w-md">
           <!-- Mobile Branding (Hidden on Large Screens) -->
-          <div class="lg:hidden mb-12 text-center">
+          <div class="lg:hidden mb-12">
             <h1
-              class="font-headline font-black text-4xl text-primary italic tracking-tight"
+              class="font-headline font-black text-4xl text-[#7b88d9] italic tracking-tight transition-colors duration-300"
             >
               Rendevoo
             </h1>
           </div>
           <div class="space-y-2 mb-10">
             <h2
-              class="text-display font-headline text-4xl font-extrabold text-on-surface tracking-tight"
+              class="text-display font-headline text-4xl font-extrabold text-on-surface dark:text-[#e8e8f0] tracking-tight transition-colors duration-300"
             >
               Welcome back
             </h2>
-            <p class="text-on-surface-variant">
+            <p
+              class="text-on-surface-variant dark:text-[#b0b0c0] transition-colors duration-300"
+            >
               Step back into your social pulse.
             </p>
           </div>
@@ -209,19 +201,19 @@
           <form id="login-form" class="space-y-6">
             <div class="space-y-1.5">
               <label
-                class="text-xs font-label uppercase tracking-widest text-on-surface-variant ml-4"
+                class="text-xs font-label uppercase tracking-widest text-on-surface-variant dark:text-[#b0b0c0] ml-4 transition-colors duration-300"
                 for="username"
                 >Username</label
               >
               <div class="relative">
                 <span
-                  class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-xl"
-                  >mail</span
+                  class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant dark:text-[#767680] text-xl transition-colors duration-300"
+                  >person</span
                 >
                 <input
-                  class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-DEFAULT focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-300 placeholder:text-outline/50"
+                  class="w-full pl-12 pr-4 py-4 bg-surface-container-low dark:bg-[#2a2a3e] border-none rounded-DEFAULT focus:ring-2 focus:ring-primary/20 dark:focus:ring-[#7b88d9]/20 focus:bg-surface-container-lowest dark:focus:bg-[#3a3a50] transition-all duration-300 placeholder:text-outline/50 dark:placeholder-[#767680] text-on-surface dark:text-[#e8e8f0]"
                   id="username"
-                  placeholder="your_username"
+                  placeholder="Username"
                   type="text"
                 />
               </div>
@@ -229,29 +221,29 @@
             <div class="space-y-1.5">
               <div class="flex justify-between items-center ml-4 mr-1">
                 <label
-                  class="text-xs font-label uppercase tracking-widest text-on-surface-variant"
+                  class="text-xs font-label uppercase tracking-widest text-on-surface-variant dark:text-[#b0b0c0] transition-colors duration-300"
                   for="password"
                   >Password</label
                 >
-                <a
-                  class="text-xs font-label uppercase tracking-widest text-primary hover:text-primary-dim transition-colors"
+                <!-- <a
+                  class="text-xs font-label uppercase tracking-widest text-primary dark:text-[#7b88d9] hover:text-primary-dim dark:hover:text-[#96a5ff] transition-colors duration-300"
                   href="#"
                   >Forgot?</a
-                >
+                > -->
               </div>
               <div class="relative">
                 <span
-                  class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-xl"
+                  class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant dark:text-[#767680] text-xl transition-colors duration-300"
                   >lock</span
                 >
                 <input
-                  class="w-full pl-12 pr-12 py-4 bg-surface-container-low border-none rounded-DEFAULT focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-300 placeholder:text-outline/50"
+                  class="w-full pl-12 pr-12 py-4 bg-surface-container-low dark:bg-[#2a2a3e] border-none rounded-DEFAULT focus:ring-2 focus:ring-primary/20 dark:focus:ring-[#7b88d9]/20 focus:bg-surface-container-lowest dark:focus:bg-[#3a3a50] transition-all duration-300 placeholder:text-outline/50 dark:placeholder-[#767680] text-on-surface dark:text-[#e8e8f0]"
                   id="password"
                   placeholder="••••••••"
                   type="password"
                 />
                 <button
-                  class="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface transition-colors"
+                  class="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant dark:text-[#767680] hover:text-on-surface dark:hover:text-[#e8e8f0] transition-colors duration-300"
                   type="button"
                 >
                   <span class="material-symbols-outlined text-xl"
@@ -262,16 +254,18 @@
             </div>
             <div class="flex items-center gap-3 ml-1">
               <input
-                class="w-5 h-5 rounded-md border-outline-variant/30 text-primary focus:ring-primary"
+                class="w-5 h-5 rounded-md border-outline-variant/30 text-primary dark:text-[#7b88d9] focus:ring-primary dark:focus:ring-[#7b88d9] dark:bg-[#2a2a3e] dark:border-[#767680]/30 transition-colors duration-300"
                 id="remember"
                 type="checkbox"
               />
-              <label class="text-sm text-on-surface-variant" for="remember"
+              <label
+                class="text-sm text-on-surface-variant dark:text-[#b0b0c0] transition-colors duration-300"
+                for="remember"
                 >Keep me signed in for 30 days</label
               >
             </div>
             <button
-              class="w-full py-4 gradient-button text-on-primary font-headline font-bold rounded-full shadow-lg hover:shadow-primary/20 hover:scale-[1.01] active:scale-95 transition-all duration-300"
+              class="w-full py-4 gradient-button text-on-primary font-headline font-bold rounded-full shadow-lg hover:shadow-primary/20 dark:hover:shadow-[#7b88d9]/20 hover:scale-[1.01] active:scale-95 transition-all duration-300"
               type="submit"
             >
               Sign In
@@ -279,12 +273,15 @@
           </form>
           <div
             id="error-message"
-            style="color: red; margin-top: 10px; font-weight: bold"
+            style="margin-top: 10px; font-weight: bold"
+            class="text-red-500 dark:text-red-400 transition-colors duration-300"
           ></div>
-          <p class="mt-10 text-center text-on-surface-variant text-sm">
+          <p
+            class="mt-10 text-center text-on-surface-variant dark:text-[#b0b0c0] text-sm transition-colors duration-300"
+          >
             Don't have an account?
             <a
-              class="text-primary font-bold hover:underline underline-offset-4 decoration-2"
+              class="text-primary dark:text-[#7b88d9] font-bold hover:underline underline-offset-4 decoration-2 transition-colors duration-300"
               href="./signup.html"
               >Create an account</a
             >

@@ -10,14 +10,35 @@ console.log("google =", window.google);
 console.log("API key test");
 
 async function initMap() {
+  const customStyle = [
+    {
+      featureType: "water",
+      elementType: "geometry",
+      stylers: [{ color: "#193341" }],
+    },
+    {
+      featureType: "landscape",
+      elementType: "geometry",
+      stylers: [{ color: "#2c5b70" }],
+    },
+    {
+      featureType: "poi",
+      elementType: "labels.text.fill",
+      stylers: [
+        { visibility: "off" }, // Completely hides business/POI labels
+      ],
+    },
+  ];
   const { Map } = await google.maps.importLibrary("maps");
   const { AdvancedMarkerElement, PinElement } =
     await google.maps.importLibrary("marker");
 
   const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 4,
-    center: { lat: 24, lng: 90 },
-    mapId: "DEMO_MAP_ID",
+    zoom: 10,
+    center: { lat: 50, lng: 50 },
+    // mapId: "DEMO_MAP_ID",
+    minZoom: 3,
+    styles: customStyle,
   });
 
   const meetupList = await getMeetups();

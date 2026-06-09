@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="light" lang="en">
+<html class="dark" lang="en">
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -26,6 +26,21 @@
               secondary: "#00675f",
               background: "#f6f6f8",
             },
+            darkMode: "class",
+          },
+          dark: {
+            colors: {
+              "surface-container-lowest": "#0f0f1e",
+              surface: "#1a1a2e",
+              primary: "#7b88d9",
+              "primary-container": "#5568c8",
+              secondary: "#4db8a8",
+              background: "#1a1a2e",
+              "on-surface": "#e8e8f0",
+              "on-surface-variant": "#b0b0c0",
+              outline: "#767680",
+            },
+          },
             borderRadius: {
               DEFAULT: "1rem",
               lg: "2rem",
@@ -60,12 +75,17 @@
       .hero-gradient {
         background: linear-gradient(135deg, #4555a8 0%, #96a5ff 100%);
       }
+      .hero-gradient {
+        background: linear-gradient(135deg, #5568c8 0%, #7b88d9 100%);
+      }
     </style>
   </head>
-  <body class="bg-surface text-on-surface overflow-x-hidden">
+  <body
+    class="bg-[#1a1a2e] text-[#e8e8f0] overflow-x-hidden transition-colors duration-300"
+  >
     <main class="min-h-screen flex flex-col md:flex-row">
       <section
-        class="w-full md:w-1/2 lg:w-[55%] relative flex flex-col justify-between p-8 md:p-16 hero-gradient overflow-hidden min-h-[409px] md:min-h-screen"
+        class="w-full md:w-1/2 lg:w-[55%] relative flex flex-col justify-between p-8 md:p-16 hero-gradient dark:bg-gradient-to-br dark:from-[#5568c8] dark:to-[#7b88d9] overflow-hidden min-h-[409px] md:min-h-screen transition-all duration-300"
       >
         <div
           class="absolute top-[-10%] right-[-10%] w-96 h-96 bg-white/10 rounded-full blur-3xl animate-pulse"
@@ -93,44 +113,47 @@
         </div>
       </section>
       <section
-        class="w-full md:w-1/2 lg:w-[45%] bg-surface-bright flex items-center justify-center p-6 md:p-12 lg:p-20"
+        class="w-full md:w-1/2 lg:w-[45%] bg-surface-bright dark:bg-[#0f0f1e] flex items-center justify-center p-6 md:p-12 lg:p-20 transition-colors duration-300"
       >
         <div class="w-full max-w-md">
           <div class="md:hidden mb-8">
-            <span class="text-2xl font-black text-primary italic font-headline"
+            <span
+              class="text-2xl font-black text-[#7b88d9] italic font-headline transition-colors duration-300"
               >Rendevoo</span
             >
           </div>
           <header class="mb-10">
             <h2
-              class="text-3xl font-bold text-on-surface tracking-tight font-headline mb-2"
+              class="text-3xl font-bold text-on-surface dark:text-[#e8e8f0] tracking-tight font-headline mb-2 transition-colors duration-300"
             >
               Create your account
             </h2>
-            <p class="text-on-surface-variant font-body">
+            <p
+              class="text-on-surface-variant dark:text-[#b0b0c0] font-body transition-colors duration-300"
+            >
               Join the circle and start discovering your community.
             </p>
           </header>
           <form id="signup-form" class="space-y-6">
             <div class="space-y-2">
               <label
-                class="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant ml-1"
+                class="text-xs font-label uppercase tracking-widest text-on-surface-variant dark:text-[#b0b0c0] ml-4 transition-colors duration-300"
                 for="username"
-                >Full Name</label
+                >Username</label
               >
               <div class="group relative">
                 <div
-                  class="absolute inset-y-0 left-4 flex items-center pointer-events-none text-outline"
+                  class="absolute inset-y-0 left-4 flex items-center pointer-events-none text-outline dark:text-[#767680] transition-colors duration-300"
                 >
                   <span class="material-symbols-outlined text-[20px]"
                     >person</span
                   >
                 </div>
                 <input
-                  class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-DEFAULT focus:ring-2 focus:ring-primary/20 transition-all duration-300 outline-none text-on-surface font-body"
+                  class="w-full pl-12 pr-4 py-4 bg-surface-container-low dark:bg-[#2a2a3e] border-none rounded-DEFAULT focus:ring-2 focus:ring-primary/20 dark:focus:ring-[#7b88d9]/20 transition-all duration-300 outline-none text-on-surface dark:text-[#e8e8f0] font-body dark:placeholder-[#767680]"
                   id="username"
                   name="username"
-                  placeholder="John Doe"
+                  placeholder="Username"
                   required
                   type="text"
                 />
@@ -138,20 +161,20 @@
             </div>
             <div class="space-y-2">
               <label
-                class="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant ml-1"
+                class="text-xs font-label uppercase tracking-widest text-on-surface-variant dark:text-[#b0b0c0] ml-4 transition-colors duration-300"
                 for="email"
                 >Email Address</label
               >
               <div class="group relative">
                 <div
-                  class="absolute inset-y-0 left-4 flex items-center pointer-events-none text-outline"
+                  class="absolute inset-y-0 left-4 flex items-center pointer-events-none text-outline dark:text-[#767680] transition-colors duration-300"
                 >
                   <span class="material-symbols-outlined text-[20px]"
                     >mail</span
                   >
                 </div>
                 <input
-                  class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-DEFAULT focus:ring-2 focus:ring-primary/20 transition-all duration-300 outline-none text-on-surface font-body"
+                  class="w-full pl-12 pr-4 py-4 bg-surface-container-low dark:bg-[#2a2a3e] border-none rounded-DEFAULT focus:ring-2 focus:ring-primary/20 dark:focus:ring-[#7b88d9]/20 transition-all duration-300 outline-none text-on-surface dark:text-[#e8e8f0] font-body dark:placeholder-[#767680]"
                   id="email"
                   name="email"
                   placeholder="hello@example.com"
@@ -162,20 +185,20 @@
             </div>
             <div class="space-y-2">
               <label
-                class="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant ml-1"
+                class="text-xs font-label uppercase tracking-widest text-on-surface-variant dark:text-[#b0b0c0] ml-4 transition-colors duration-300"
                 for="password"
                 >Password</label
               >
               <div class="group relative">
                 <div
-                  class="absolute inset-y-0 left-4 flex items-center pointer-events-none text-outline"
+                  class="absolute inset-y-0 left-4 flex items-center pointer-events-none text-outline dark:text-[#767680] transition-colors duration-300"
                 >
                   <span class="material-symbols-outlined text-[20px]"
                     >lock</span
                   >
                 </div>
                 <input
-                  class="w-full pl-12 pr-12 py-4 bg-surface-container-low border-none rounded-DEFAULT focus:ring-2 focus:ring-primary/20 transition-all duration-300 outline-none text-on-surface font-body"
+                  class="w-full pl-12 pr-12 py-4 bg-surface-container-low dark:bg-[#2a2a3e] border-none rounded-DEFAULT focus:ring-2 focus:ring-primary/20 dark:focus:ring-[#7b88d9]/20 transition-all duration-300 outline-none text-on-surface dark:text-[#e8e8f0] font-body dark:placeholder-[#767680]"
                   id="password"
                   name="password"
                   placeholder="••••••••"
@@ -183,7 +206,7 @@
                   type="password"
                 />
                 <button
-                  class="absolute inset-y-0 right-4 flex items-center text-outline hover:text-primary transition-colors"
+                  class="absolute inset-y-0 right-4 flex items-center text-outline dark:text-[#767680] hover:text-primary dark:hover:text-[#7b88d9] transition-colors"
                   type="button"
                 >
                   <span class="material-symbols-outlined text-[20px]"
@@ -191,13 +214,15 @@
                   >
                 </button>
               </div>
-              <p class="text-[11px] text-on-surface-variant/60 px-1 italic">
+              <p
+                class="text-[11px] text-on-surface-variant/60 dark:text-[#767680]/60 px-1 italic transition-colors duration-300"
+              >
                 Must be at least 8 characters with a symbol.
               </p>
             </div>
             <div class="pt-4">
               <button
-                class="w-full hero-gradient text-on-primary font-bold py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+                class="w-full hero-gradient dark:bg-gradient-to-r dark:from-[#5568c8] dark:to-[#7b88d9] text-on-primary font-bold py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
                 type="submit"
               >
                 Create Account
@@ -206,12 +231,15 @@
           </form>
           <div
             id="error-message"
-            style="color: red; margin-top: 10px; font-weight: bold"
+            style="margin-top: 10px; font-weight: bold"
+            class="text-red-500 dark:text-red-400 transition-colors duration-300"
           ></div>
-          <p class="mt-10 text-center text-on-surface-variant text-sm">
+          <p
+            class="mt-10 text-center text-on-surface-variant dark:text-[#b0b0c0] text-sm transition-colors duration-300"
+          >
             Already have an account?
             <a
-              class="text-primary font-bold hover:underline underline-offset-4 decoration-2"
+              class="text-primary dark:text-[#7b88d9] font-bold hover:underline underline-offset-4 decoration-2 transition-colors duration-300"
               href="./login.html"
               >Sign in</a
             >
@@ -225,7 +253,7 @@
           const icon = input.parentElement.querySelector(
             ".material-symbols-outlined",
           );
-          if (icon) icon.style.color = "#4555a8";
+          if (icon) icon.style.color = "#7b88d9";
         });
         input.addEventListener("blur", () => {
           const icon = input.parentElement.querySelector(
