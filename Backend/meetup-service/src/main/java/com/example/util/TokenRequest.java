@@ -1,6 +1,6 @@
-package com.example.user_service;
+package com.example.util;
 
-class TokenRequest {
+public class TokenRequest {
     private String token;
 
     public String getToken() {

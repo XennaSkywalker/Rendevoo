@@ -12,6 +12,7 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
 
   try {
     const data = await login(credentials);
+    console.log("Login successful:", data);
   } catch (error) {
     console.error("Login failed:", error);
     if (errorMessageDiv) errorMessageDiv.textContent = error.message;

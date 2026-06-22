@@ -4,6 +4,7 @@ const meetupFormContainer = document.getElementById("meetup-form-container");
 const meetupForm = document.getElementById("meetup-form");
 const closeButton = document.getElementById("close-button");
 const submitButton = document.getElementById("submit-button");
+const errorMessageDiv = document.getElementById("error-message");
 let latLng;
 
 console.log("google =", window.google);
@@ -24,9 +25,6 @@ async function initMap() {
     {
       featureType: "poi",
       elementType: "labels.text.fill",
-      stylers: [
-        { visibility: "off" }, // Completely hides business/POI labels
-      ],
     },
   ];
   const { Map } = await google.maps.importLibrary("maps");
@@ -34,10 +32,10 @@ async function initMap() {
     await google.maps.importLibrary("marker");
 
   const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 10,
-    center: { lat: 50, lng: 50 },
-    // mapId: "DEMO_MAP_ID",
-    minZoom: 3,
+    zoom: 4,
+    center: { lat: 18, lng: 73 },
+    mapId: "176c391fbf3dd89d6444b1be",
+    minZoom: 4,
     styles: customStyle,
   });
 
@@ -58,7 +56,7 @@ async function initMap() {
     meetupFormContainer.classList.add("hidden");
   });
 
-  submitButton.addEventListener("click", async (e) => {
+  meetupForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const meetupFormData = new FormData(meetupForm);
     const meetupData = {
@@ -68,10 +66,21 @@ async function initMap() {
       meetupDate: meetupFormData.get("meetup-date"),
       meetupTime: meetupFormData.get("meetup-time"),
     };
-    const meetupResponse = await postMeetup(meetupData);
-    const lat = meetupResponse.lat;
-    const lng = meetupResponse.lng;
-    placeMarker(lat, lng, map);
+
+    if (errorMessageDiv) {
+      errorMessageDiv.textContent = "";
+    }
+
+    try {
+      const meetupResponse = await postMeetup(meetupData);
+      const lat = meetupResponse.lat;
+      const lng = meetupResponse.lng;
+      placeMarker(lat, lng, map);
+      console.log("Meetup created:", meetupResponse);
+    } catch (error) {
+      console.error("Failed to create meetup:", error);
+      if (errorMessageDiv) errorMessageDiv.textContent = error.message;
+    }
   });
 }
 

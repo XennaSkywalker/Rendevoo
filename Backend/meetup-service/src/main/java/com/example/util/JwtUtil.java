@@ -31,17 +31,13 @@ public class JwtUtil {
                 .subject(id.toString())
                 .issuedAt(new Date())
                 .expiration(Date.from(LocalDate.now().plusDays(7).atTime(LocalTime.now()).toInstant(ZoneOffset.UTC)))
+                //returns expiry with an extra 5:30 hours, some timezone issue prolly
                 .signWith(key, alg)
                 .compact();
     }
 
-    public String verifyToken(String token) {
-        Claims content;
-        try {
-            content = Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload();
-        } catch (JwtException ex) {
-            return ex.getMessage();
-        }
+    public String verifyToken(String token) throws JwtException{
+        Claims content = Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload();
 
         return content.getSubject();
     }

@@ -31,6 +31,11 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
+    public UserEntity loadById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+
     public boolean existsByUsername(String username) {
         return userRepository.existsByUsername(username);
     }
@@ -65,7 +70,7 @@ public class UserService implements UserDetailsService {
             throw new UsernameExistsException(signupDTO.getUsername());
 
         if (existsByEmail(signupDTO.getEmail()))
-            throw new EmailExistsException(signupDTO.getUsername());
+            throw new EmailExistsException(signupDTO.getEmail());
 
         //if both dont already exist, create new user
         UserEntity user = new UserEntity(signupDTO.getUsername(), signupDTO.getEmail(), passwordEncoder.encode(signupDTO.getPassword()));

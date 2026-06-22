@@ -30,6 +30,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleMethodArguementNotValid(MethodArgumentNotValidException ex) {
         FieldError error = ex.getBindingResult().getFieldError();
         String message = (error != null) ? error.getDefaultMessage() : "Invalid arguement";
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("INVALID_ARGUEMENT", message    ));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("INVALID_ARGUEMENT", message));
     }
 }

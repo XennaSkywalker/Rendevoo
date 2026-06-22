@@ -1,3 +1,28 @@
+export async function authFetch(resource, options = {}) {
+  const token = localStorage.getItem("token");
+  const headers = {
+    "Content-Type": "application/json",
+    ...(token && { Authorization: `Bearer ${token}` }),
+  };
+
+  const response = await fetch(resource, { ...options, headers });
+  const data = await response.json();
+
+  if (!response.ok) {
+    console.log("authFetch response data:", data);
+    const message =
+      data.error || data.message || response.statusText || "Request failed";
+    throw new Error(message);
+  }
+
+  if (data.error) {
+    console.log("authFetch response data:", data);
+    throw new Error(data.error);
+  }
+
+  return data;
+}
+
 export async function getMeetups() {
   const response = await fetch("http://localhost:8080/backend/meetup", {
     method: "GET",
@@ -8,14 +33,10 @@ export async function getMeetups() {
 }
 
 export async function postMeetup(meetupData) {
-  const response = await fetch("http://localhost:8080/backend/meetup", {
+  const data = await authFetch("http://localhost:8080/backend/meetup", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
     body: JSON.stringify(meetupData),
   });
-  const data = await response.json();
   console.log(data);
   return data;
 }
@@ -39,6 +60,7 @@ export async function login(credentials) {
   }
 
   // If successful, redirect to home page
+  localStorage.setItem("token", data.token);
   window.location.href = "http://localhost:5500";
   return data;
 }
