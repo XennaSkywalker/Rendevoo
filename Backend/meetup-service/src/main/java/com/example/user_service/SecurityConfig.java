@@ -30,7 +30,7 @@ public class SecurityConfig {
         http
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(List.of("http://localhost:5500"));
+                    config.setAllowedOrigins(List.of("http://localhost:5500", "*"));
                     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     config.setAllowedHeaders(List.of("*"));
                     config.setAllowCredentials(true);
@@ -42,6 +42,7 @@ public class SecurityConfig {
                 // 2. Configure endpoint permissions
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/signup", "/auth/login", "/error").permitAll()
+                        .requestMatchers("/ws/**").permitAll()
                         .requestMatchers("/auth/verify").permitAll() //CHANGE THIS LATER
                         .requestMatchers(HttpMethod.GET,"/backend/meetup").permitAll()
                         .anyRequest().authenticated()               // Protects all other endpoints

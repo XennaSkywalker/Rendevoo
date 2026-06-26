@@ -1,7 +1,9 @@
 package com.example.meetup_service;
 
+import com.example.user_service.UserEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -26,8 +28,8 @@ public class MeetupService {
     }
 
     public MeetupEntity toEntity(MeetupRequestDTO meetupRequestDTO) {
-
-        return new MeetupEntity(1234, meetupRequestDTO.getLat(),
+        UserEntity creator = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return new MeetupEntity(creator.getId(), meetupRequestDTO.getLat(),
                 meetupRequestDTO.getLng(),
                 meetupRequestDTO.getMeetupName(),
                 meetupRequestDTO.getMeetupDate(),
