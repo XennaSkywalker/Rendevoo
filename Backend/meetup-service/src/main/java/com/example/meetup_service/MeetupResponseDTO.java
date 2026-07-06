@@ -9,6 +9,7 @@ public class MeetupResponseDTO {
     private String meetupName;
     private LocalDate meetupDate;
     private LocalTime meetupTime;
+    private double distanceFromUser;
 
     public MeetupResponseDTO() {
     }
@@ -19,6 +20,15 @@ public class MeetupResponseDTO {
         this.meetupName = meetupName;
         this.meetupDate = meetupDate;
         this.meetupTime = meetupTime;
+    }
+
+    public MeetupResponseDTO(double lat, double lng, String meetupName, LocalDate meetupDate, LocalTime meetupTime, double distanceFromUser) {
+        this.lat = lat;
+        this.lng = lng;
+        this.meetupName = meetupName;
+        this.meetupDate = meetupDate;
+        this.meetupTime = meetupTime;
+        this.distanceFromUser = distanceFromUser;
     }
 
     public double getLat() {

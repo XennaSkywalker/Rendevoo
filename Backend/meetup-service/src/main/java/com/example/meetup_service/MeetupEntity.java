@@ -9,7 +9,13 @@ import com.example.user_service.UserEntity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Meetups")
+@Table(name = "Meetups",
+        indexes = {
+        @Index(name = "idx_location", columnList = "lat, lng")
+        }
+)
+//no association between meetup and user, instead relying on creator ID
+//this is modular monolith architecture
 public class MeetupEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

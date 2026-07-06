@@ -61,25 +61,23 @@ COMPLETED
 - Expired meetups filtered from map and API responses
 - Exit condition met: Meetups disappear from map after their time passes
 
+[PHASE 3] — JWT Auth (DONE)
+- User entity with username, email, passwordHash
+- ManyToOne relationship on MeetupEntity linking to UserEntity
+- UserService with BCrypt password hashing
+- AuthController with POST /auth/signup and POST /auth/login
+- JwtUtil with generateToken and verifyToken (HS256, user ID as subject)
+- JwtAuthFilter extending OncePerRequestFilter
+- SecurityConfig with stateless sessions, CORS, public/protected endpoint rules
+- Frontend auth pages: login.html, signup.html
+- authFetch helper with Bearer token injection
+- Map page protected by localStorage token check
+- Exit condition met: Only logged in users can create meetups
+
 -------------------------------------------
 IN PROGRESS / UP NEXT
 -------------------------------------------
 
-[PHASE 3] — JWT Auth + Google Places API (NEXT)
-- JWT auth: signup, login, token generation
-- Protect meetup endpoints with auth
-- Associate meetups with users
-- Google Places API integration for place search
-- Exit condition: Only logged in users can create meetups
-- NOTE: Hardest phase. Budget 2 weeks.
-
-[GEOSPATIAL QUERIES] — After Phase 3
-- Add Haversine query to repository layer
-- Expose /api/meetups/nearby?lat=&lng=&radius= endpoint
-- Wire up frontend: user geolocation + radius circle on map
-- Exit condition: Map shows only meetups within X km of user
-- NOTE: Use Haversine formula, NOT PostGIS (overkill for this scale)
-- Add composite index on lat/lng columns after implementing
 
 [PHASE 4] — WebSocket Chat
 - STOMP over WebSocket in Spring Boot
@@ -87,6 +85,14 @@ IN PROGRESS / UP NEXT
 - Real-time message broadcasting to participants
 - Basic chat UI on frontend
 - Exit condition: Two browser tabs can exchange messages in a meetup chat
+
+[GEOSPATIAL QUERIES] — After Phase 4
+- Add Haversine query to repository layer
+- Expose /api/meetups/nearby?lat=&lng=&radius= endpoint
+- Wire up frontend: user geolocation + radius circle on map
+- Exit condition: Map shows only meetups within X km of user
+- NOTE: Use Haversine formula, NOT PostGIS (overkill for this scale)
+- Add composite index on lat/lng columns after implementing
 
 [PHASE 5] — Integration
 - Only meetup participants can access chat

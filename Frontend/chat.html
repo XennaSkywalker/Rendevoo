@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat - Rendevoo</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+          Cantarell, sans-serif;
+        background: #f5f5f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .chat-container {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 500px;
+        display: flex;
+        flex-direction: column;
+        height: 600px;
+      }
+
+      .chat-header {
+        padding: 20px;
+        border-bottom: 1px solid #eee;
+        background: #007bff;
+        color: white;
+        border-radius: 8px 8px 0 0;
+      }
+
+      .chat-header h1 {
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      #messagesDiv {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .message {
+        padding: 10px 14px;
+        border-radius: 6px;
+        word-wrap: break-word;
+        max-width: 90%;
+      }
+
+      .message.sent {
+        align-self: flex-end;
+        background: #007bff;
+        color: white;
+      }
+
+      .message.received {
+        align-self: flex-start;
+        background: #e9ecef;
+        color: #333;
+      }
+
+      .message-sender {
+        font-size: 12px;
+        opacity: 0.8;
+        margin-bottom: 4px;
+      }
+
+      .message-content {
+        font-size: 14px;
+      }
+
+      .chat-input-area {
+        padding: 15px;
+        border-top: 1px solid #eee;
+        display: flex;
+        gap: 10px;
+      }
+
+      #messageInput {
+        flex: 1;
+        padding: 10px 14px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        font-family: inherit;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+
+      #messageInput:focus {
+        border-color: #007bff;
+      }
+
+      #sendBtn {
+        padding: 10px 20px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+        transition: background 0.2s;
+      }
+
+      #sendBtn:hover {
+        background: #0056b3;
+      }
+
+      #sendBtn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chat-container">
+      <div class="chat-header">
+        <h1>Chat - Meetup #1</h1>
+      </div>
+      <div id="messagesDiv"></div>
+      <div class="chat-input-area">
+        <input type="text" id="messageInput" placeholder="Type a message..." />
+        <button id="sendBtn">Send</button>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+    <script>
+      // Hardcoded values
+      const meetupId = 1;
+      const senderName = "User123"; // Hardcoded sender
+      const wsUrl = "ws://localhost:8080/ws";
+
+      // Elements
+      const messagesDiv = document.getElementById("messagesDiv");
+      const messageInput = document.getElementById("messageInput");
+      const sendBtn = document.getElementById("sendBtn");
+
+      // STOMP client
+      const client = new StompJs.Client({
+        brokerURL: wsUrl,
+        reconnectDelay: 5000,
+        heartbeatIncoming: 4000,
+        heartbeatOutgoing: 4000,
+      });
+
+      // Connect handler
+      client.onConnect = function (frame) {
+        console.log("✓ Connected to WebSocket server");
+
+        // Subscribe to the meetup topic
+        client.subscribe(`/topic/meetup/${meetupId}`, function (message) {
+          const payload = JSON.parse(message.body);
+          // Skip if this message is from the current user (already displayed locally)
+          if (payload.sender !== senderName) {
+            displayMessage(payload, "received");
+          }
+        });
+      };
+
+      // Disconnect handler
+      client.onDisconnect = function () {
+        console.log("✗ Disconnected from server");
+      };
+
+      // Error handler
+      client.onStompError = function (frame) {
+        console.error("STOMP error:", frame.headers["message"], frame.body);
+      };
+
+      // Send message on button click
+      sendBtn.addEventListener("click", sendMessage);
+      messageInput.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") sendMessage();
+      });
+
+      function sendMessage() {
+        const content = messageInput.value.trim();
+
+        if (!content) return;
+
+        const message = {
+          sender: senderName,
+          content: content,
+          meetupID: meetupId,
+          sentAt: new Date().toISOString(),
+        };
+
+        // Publish to server
+        client.publish({
+          destination: `/app/chat/${meetupId}`,
+          body: JSON.stringify(message),
+        });
+
+        // Show in UI immediately
+        displayMessage(message, "sent");
+
+        // Clear input
+        messageInput.value = "";
+        messageInput.focus();
+      }
+
+      function displayMessage(msg, type) {
+        const messageEl = document.createElement("div");
+        messageEl.className = `message ${type}`;
+
+        const senderEl = document.createElement("div");
+        senderEl.className = "message-sender";
+        senderEl.textContent = msg.sender || "Unknown";
+
+        const contentEl = document.createElement("div");
+        contentEl.className = "message-content";
+        contentEl.textContent = msg.content;
+
+        messageEl.appendChild(senderEl);
+        messageEl.appendChild(contentEl);
+        messagesDiv.appendChild(messageEl);
+
+        // Scroll to bottom
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+      }
+
+      // Activate connection
+      client.activate();
+      console.log("Attempting to connect to " + wsUrl);
+    </script>
+  </body>
+</html>
