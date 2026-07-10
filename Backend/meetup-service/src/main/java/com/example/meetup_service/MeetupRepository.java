@@ -1,6 +1,7 @@
 package com.example.meetup_service;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -22,10 +23,15 @@ public interface MeetupRepository extends JpaRepository<MeetupEntity, Long> {
             ") AS nearby\n" +
             "WHERE nearby.distance < :radius",
     nativeQuery = true)
-    List<MeetupEntity> findNearbyMeetups(@Param("lat") double lat, @Param("lng") double lng, @Param("radius") int radius);
+    List<MeetupResponseProjection> findNearbyMeetups(@Param("lat") double lat, @Param("lng") double lng, @Param("radius") int radius);
 
     List<MeetupEntity> findByCreatorId(long creatorId);
 
+    //for lazy filtering at DB level, no need to convert into Meetup Entity etc
+    @Modifying
+    @Query (value = "UPDATE meetups SET meetup_status = 'EXPIRED' WHERE (meetup_date + meetup_time)::timestamp < NOW() AND meetup_status = 'ACTIVE'",
+    nativeQuery = true)
+    void updateMeetupStatus();
 
     //things to do:
     //deleting a user and,
