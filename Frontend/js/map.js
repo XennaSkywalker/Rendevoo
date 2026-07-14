@@ -1,95 +1,222 @@
 import { getMeetups, postMeetup } from "./api.js";
-//this file is only for handling the UI of the website
+
 const meetupFormContainer = document.getElementById("meetup-form-container");
 const meetupForm = document.getElementById("meetup-form");
 const closeButton = document.getElementById("close-button");
-const submitButton = document.getElementById("submit-button");
 const errorMessageDiv = document.getElementById("error-message");
-let latLng;
-
+const setLocationButton = document.getElementById("set-location-button");
+const locationStatusText = document.getElementById("location-status-text");
+let userLng = null;
+let userLat = null;
+let selectedLatLng = null;
+let mode = "CREATE";
 console.log("google =", window.google);
 console.log("API key test");
 
 async function initMap() {
-  const customStyle = [
-    {
-      featureType: "water",
-      elementType: "geometry",
-      stylers: [{ color: "#193341" }],
-    },
-    {
-      featureType: "landscape",
-      elementType: "geometry",
-      stylers: [{ color: "#2c5b70" }],
-    },
-    {
-      featureType: "poi",
-      elementType: "labels.text.fill",
-    },
-  ];
   const { Map } = await google.maps.importLibrary("maps");
   const { AdvancedMarkerElement, PinElement } =
     await google.maps.importLibrary("marker");
 
-  const map = new google.maps.Map(document.getElementById("map"), {
+  const initialLocation = await getUserLocation();
+  userLat = initialLocation.lat;
+  userLng = initialLocation.lng;
+
+  const map = new Map(document.getElementById("map"), {
     zoom: 4,
-    center: { lat: 18, lng: 73 },
+    center: { lat: userLat, lng: userLng },
     mapId: "176c391fbf3dd89d6444b1be",
     minZoom: 4,
-    styles: customStyle,
   });
 
-  const meetupList = await getMeetups();
-  meetupList.forEach((element) => {
-    placeMarker(element.lat, element.lng, map);
-  });
+  placeUserLocationMarker(
+    map,
+    userLat,
+    userLng,
+    AdvancedMarkerElement,
+    PinElement,
+  );
+  updateLocationStatus("Location set automatically");
+  map.setCenter({ lat: userLat, lng: userLng });
 
-  //map on click
-  map.addListener("click", (e) => {
-    latLng = e.latLng;
-    displayLatLng(e.latLng);
-    meetupFormContainer.classList.remove("hidden");
-  });
+  setupMeetupInteractions(map, AdvancedMarkerElement);
+  await loadMeetups(map, AdvancedMarkerElement);
+}
 
-  //form buttons
-  closeButton.addEventListener("click", () => {
-    meetupFormContainer.classList.add("hidden");
-  });
+async function getUserLocation() {
+  if (!navigator.geolocation) {
+    return { lat: 18, lng: 73 };
+  }
 
-  meetupForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const meetupFormData = new FormData(meetupForm);
-    const meetupData = {
-      lat: latLng.lat(),
-      lng: latLng.lng(),
-      meetupName: meetupFormData.get("meetup-name"),
-      meetupDate: meetupFormData.get("meetup-date"),
-      meetupTime: meetupFormData.get("meetup-time"),
-    };
-
-    if (errorMessageDiv) {
-      errorMessageDiv.textContent = "";
-    }
-
-    try {
-      const meetupResponse = await postMeetup(meetupData);
-      const lat = meetupResponse.lat;
-      const lng = meetupResponse.lng;
-      placeMarker(lat, lng, map);
-      console.log("Meetup created:", meetupResponse);
-    } catch (error) {
-      console.error("Failed to create meetup:", error);
-      if (errorMessageDiv) errorMessageDiv.textContent = error.message;
-    }
+  return new Promise((resolve) => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        resolve({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+      },
+      () => resolve({ lat: 18, lng: 73 }),
+      { enableHighAccuracy: true, timeout: 5000 },
+    );
   });
 }
 
-//helper functions
-function placeMarker(lat, lng, map) {
-  const marker = new google.maps.marker.AdvancedMarkerElement({
-    position: { lat: lat, lng: lng },
-    map: map,
+function placeUserLocationMarker(
+  map,
+  lat,
+  lng,
+  AdvancedMarkerElement,
+  PinElement,
+) {
+  const bluePin = new PinElement({
+    background: "#4285F4",
+    borderColor: "#1A73E8",
+    glyphColor: "#FFFFFF",
   });
+
+  new AdvancedMarkerElement({
+    map,
+    position: { lat, lng },
+    content: bluePin.element,
+  });
+}
+
+function setupMeetupInteractions(map, AdvancedMarkerElement) {
+  map.addListener("click", (event) => {
+    if (mode === "CREATE") {
+      selectedLatLng = event.latLng;
+      displayLatLng(event.latLng);
+      showMeetupForm();
+    } else if (mode === "SEARCH") {
+      userLat = event.latLng.lat();
+      userLng = event.latLng.lng();
+      console.log("User location set:", userLat, userLng);
+      selectedLatLng = event.latLng;
+      setLocationConfirmed();
+      map.setCenter({ lat: userLat, lng: userLng });
+    }
+  });
+
+  closeButton?.addEventListener("click", hideMeetupForm);
+
+  setLocationButton?.addEventListener("click", () => {
+    mode = "SEARCH";
+    setLocationButton.classList.remove(
+      "bg-surface-container",
+      "text-on-surface-variant",
+    );
+    setLocationButton.classList.add(
+      "bg-primary/10",
+      "text-primary",
+      "ring-2",
+      "ring-primary/30",
+    );
+    setLocationButton.textContent = "Set location manually";
+    updateLocationStatus("Click anywhere on the map to set the location.");
+  });
+
+  meetupForm?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    await handleMeetupSubmit(map, AdvancedMarkerElement);
+  });
+}
+
+async function loadMeetups(map, AdvancedMarkerElement) {
+  const meetupList = await getMeetups(userLat, userLng, 100); // Example coordinates and radius
+  meetupList.forEach((element) => {
+    placeMarker(element.lat, element.lng, map, AdvancedMarkerElement);
+  });
+}
+
+async function handleMeetupSubmit(map, AdvancedMarkerElement) {
+  if (!selectedLatLng) {
+    showErrorMessage("Please select a location on the map.");
+    return;
+  }
+
+  const formData = new FormData(meetupForm);
+  const meetupData = {
+    lat: selectedLatLng.lat(),
+    lng: selectedLatLng.lng(),
+    meetupName: formData.get("meetup-name"),
+    meetupDate: formData.get("meetup-date"),
+    meetupTime: formData.get("meetup-time"),
+  };
+
+  clearErrorMessage();
+
+  try {
+    const meetupResponse = await postMeetup(meetupData);
+    placeMarker(
+      meetupResponse.lat,
+      meetupResponse.lng,
+      map,
+      AdvancedMarkerElement,
+    );
+    hideMeetupForm();
+    meetupForm?.reset();
+    console.log("Meetup created:", meetupResponse);
+  } catch (error) {
+    console.error("Failed to create meetup:", error);
+    showErrorMessage(error.message);
+  }
+}
+
+function showMeetupForm() {
+  meetupFormContainer?.classList.remove("hidden");
+}
+
+function hideMeetupForm() {
+  meetupFormContainer?.classList.add("hidden");
+  meetupForm?.reset();
+  clearErrorMessage();
+}
+
+function setLocationConfirmed() {
+  if (setLocationButton) {
+    setLocationButton.classList.remove(
+      "bg-primary/10",
+      "text-primary",
+      "ring-2",
+      "ring-primary/30",
+    );
+    setLocationButton.classList.add(
+      "bg-surface-container",
+      "text-on-surface-variant",
+    );
+    mode = "CREATE";
+  }
+
+  updateLocationStatus("Location set. You can now submit the meetup.");
+}
+
+function updateLocationStatus(message) {
+  if (locationStatusText) {
+    locationStatusText.textContent = message;
+  }
+}
+
+function clearErrorMessage() {
+  if (errorMessageDiv) {
+    errorMessageDiv.textContent = "";
+  }
+}
+
+function showErrorMessage(message) {
+  if (errorMessageDiv) {
+    errorMessageDiv.textContent = message;
+  }
+}
+
+function placeMarker(lat, lng, map, AdvancedMarkerElement) {
+  const marker = new AdvancedMarkerElement({
+    position: { lat, lng },
+    map,
+    title: "Meetup Location",
+    gmpClickable: true,
+  });
+
   marker.addEventListener("click", () => {
     console.log("marker clicked");
   });

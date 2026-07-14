@@ -23,11 +23,15 @@ export async function authFetch(resource, options = {}) {
   return data;
 }
 
-export async function getMeetups() {
-  const response = await fetch("http://localhost:8080/backend/meetup", {
-    method: "GET",
+export async function getMeetups(userLat, userLng, radius) {
+  const data = await authFetch("http://localhost:8080/backend/nearby", {
+    method: "POST",
+    body: JSON.stringify({
+      lat: userLat,
+      lng: userLng,
+      radius: radius,
+    }), // Example coordinates
   });
-  const data = await response.json();
   console.log(data);
   return data;
 }

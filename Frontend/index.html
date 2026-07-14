@@ -136,6 +136,12 @@
         border-radius: 30px;
         overflow-y: auto;
       }
+      #location-control {
+        position: fixed;
+        top: 100px;
+        right: 30px;
+        z-index: 20;
+      }
       .hidden {
         display: none;
       }
@@ -183,6 +189,21 @@
     </nav>
     <!-- Map Container -->
     <div id="map-container">
+      <div id="location-control" class="flex flex-col items-end gap-2">
+        <button
+          type="button"
+          id="set-location-button"
+          class="rounded-full border border-surface-container bg-surface-container px-4 py-3 text-sm font-semibold text-on-surface-variant shadow-lg transition-all duration-300 hover:bg-surface-container-high dark:border-[#2a2a3e] dark:bg-[#131B2E] dark:text-[#b0b0c0] dark:hover:bg-[#1f2338]"
+        >
+          Set location manually
+        </button>
+        <p
+          id="location-status-text"
+          class="rounded-full bg-[#0f0f1e]/80 px-3 py-1 text-sm text-[#e8e8f0] shadow-md backdrop-blur dark:bg-[#050d20]/80"
+        >
+          Choose a location on the map.
+        </p>
+      </div>
       <div id="map"></div>
       <!-- Meetup Form Modal -->
       <div id="meetup-form-container" class="hidden">
@@ -203,6 +224,7 @@
           </div>
           <div class="space-y-5">
             <div class="space-y-2">
+              <div class="space-y-2">
               <label
                 class="text-sm font-semibold text-on-surface-variant dark:text-[#b0b0c0] transition-colors duration-300"
                 >Meetup Name</label
