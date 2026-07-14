@@ -44,7 +44,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/signup", "/auth/login", "/error").permitAll()
                         .requestMatchers("/ws/**").permitAll()
                         .requestMatchers("/auth/verify").permitAll() //CHANGE THIS LATER
-                        .requestMatchers(HttpMethod.GET,"/backend/meetup").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/backend/meetup", "/backend/nearby").permitAll()
                         .anyRequest().authenticated()               // Protects all other endpoints
                 )
                 .exceptionHandling(ex -> ex

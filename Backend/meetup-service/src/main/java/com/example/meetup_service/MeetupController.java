@@ -24,7 +24,7 @@ public class MeetupController {
         return meetupService.getActiveMeetups();
     }
 
-    @GetMapping("/backend/nearby")
+    @PostMapping("/backend/nearby")
     public List<MeetupResponseProjection> getNearbyMeetups(@RequestBody LocationDTO locationDTO) {
         System.out.println(locationDTO.lat + " " + locationDTO.lng);
         return meetupService.getNearbyMeetups(locationDTO);
